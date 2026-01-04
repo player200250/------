@@ -1,0 +1,288 @@
+/* 上邊欄*/
+.top-header {
+    background-color: #c2185b; /* 接近圖片中的深粉紅/桃紅色 */
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+}
+
+.company-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* 圖片中的白色小圓點 */
+.status-dot {
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+/* 藍色的早安區塊 */
+.greeting-box {
+    background-color: #007bff; /* 亮藍色 */
+    padding: 8px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+:root {
+  --sidebar-bg: #0056b3;      /* 主深藍色 */
+  --sidebar-hover: #004494;   /* 懸停深藍色 */
+  --active-border: #ff4d4d;   /* 圖片中看到的紅色點綴線 */
+  --text-white: #ffffff;
+}
+
+/* 確保 body 不會亂跑 */
+body {
+    display: flex;
+    flex-direction: column; /* 讓 Header 在上，Main 在下 */
+    height: 100vh;
+    overflow: hidden; /* 防止出現雙重滾動條 */
+}
+
+/* 這是關鍵！包住側邊欄與內容的容器 */
+.main-layout {
+    display: flex; /* 讓側邊欄與內容區「左右並排」 */
+    flex: 1;      /* 自動填滿剩餘高度 */
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 240px;
+    height: 100%; /* 填滿 main-layout 的高度 */
+    background-color: #0056b3;
+    /* ... 其他樣式保持不變 */
+}
+
+.content-area {
+    flex: 1;      /* 佔滿右邊所有空間 */
+    overflow-y: auto; /* 如果內容太多，只有右邊會滾動 */
+    background-color: #f5f5f5; /* 給一點背景色區隔搜尋區 */
+}
+
+/*查詢區*/
+.search-container {
+    background-color: #ffffff;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd; /* 暫時的邊框 */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.search-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.search-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-group input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 15px; /* 圖片中圓圓的輸入框 */
+    width: 200px;
+}
+
+/* 查詢按鈕 */
+.primary-btn {
+    padding: 10px 30px;
+    border: 1px solid #999;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: auto; /* 讓按鈕靠右 */
+}
+
+.primary-btn:hover {
+    background-color: #eeeeee;
+}
+
+/* 側邊攔*/
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background-color: var(--sidebar-bg);
+  color: var(--text-white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar-header {
+  padding: 20px;
+  background-color: rgba(0,0,0,0.1); /* 稍微深一點點做區隔 */
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* 讓變色滑順的小魔法 */
+  border-left: 4px solid transparent;
+}
+
+/* 懸停效果 */
+.sidebar-menu li:hover {
+  background-color: var(--sidebar-hover);
+  padding-left: 25px; /* 小小的位移感，很調皮吧！ */
+}
+
+/* 選中狀態（對應圖中的紅框效果） */
+.sidebar-menu li.active {
+  background-color: var(--sidebar-hover);
+  border-left: 4px solid var(--active-border);
+  font-weight: bold;
+}
+
+/*欄位美化*/
+.table-container {
+    background-color: #ffffff;
+    margin: 0 20px 20px 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse; /* 讓邊框合併，看起來更俐落 */
+    text-align: left;
+}
+
+.employee-table th {
+    background-color: #f0f7ff; /* 淡淡的藍色表頭 */
+    padding: 12px;
+    border-bottom: 2px solid #0056b3;
+    font-size: 0.9rem;
+}
+
+.employee-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+/* 斑馬紋，讓主人看資料不眼花 */
+.employee-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* 操作按鈕樣式 */
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.action-buttons button {
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.action-buttons button:hover {
+    background-color: #f0f0f0;
+}
+
+/* 圖中右下角那個大大的新增按鈕 */
+.table-footer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-add {
+    padding: 10px 40px;
+    background-color: #ffffff;
+    border: 1px solid #333;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+/*新增的談窗樣式*/
+.btn-add:hover {
+    background-color: #f5f5f5;
+}
+
+/* 彈窗背景 */
+.modal {
+    display: none; /* 平常隱藏 */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 彈窗背景遮罩 */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+/* 彈窗主體 */
+.modal-content {
+    background: white; padding: 20px; border-radius: 8px; width: 500px;
+}
+/* 兩欄式排版 */
+.detail-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px 0;
+}
+.close-btn { float: right; cursor: pointer; font-size: 24px; }

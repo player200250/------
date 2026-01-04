@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新增員工 - XXX搬家公司</title>
+    <link rel="stylesheet" href="employee.css">
+    <style>
+        /* 專門為新增頁面設計的表單樣式 */
+        .form-card {
+            background: white;
+            margin: 20px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-grid-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* 三欄佈局 */
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .full-width {
+            grid-column: span 3;
+        }
+
+        .form-actions {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top-header">
+        <div class="company-name">XXX搬家公司</div>
+        <div class="user-info">
+            <span class="status-dot"></span>
+            <div class="greeting-box">早安，XXX</div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>人力管理模組</h3>
+            </div>
+            <nav class="sidebar-menu">
+                <ul>
+                    <li onclick="location.href='employee.html'">👤 員工資料管理</li>
+                    <li><i class="icon">📅</i> 員工出勤管理</li>
+                    <li><i class="icon">🏖️</i> 員工請假管理</li>
+                    <li><i class="icon">📑</i> 人事異動管理</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content-area">
+            <div class="form-card">
+                <h2 style="margin-bottom: 20px; border-left: 5px solid #c2185b; padding-left: 10px;">基本資料建置</h2>
+                <form id="real-add-form">
+                    <div class="form-grid-layout">
+                        <div class="form-group"><label>員工編號</label><input type="text" id="id"></div>
+                        <div class="form-group"><label>員工姓名</label><input type="text" id="name"></div>
+                        <div class="form-group">
+                            <label>性別</label>
+                            <select id="gender">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>身分證字號</label><input type="text" id="sn"></div>
+                        <div class="form-group"><label>到職日</label><input type="date" id="hire-date"></div>
+                        <div class="form-group"><label>電話</label><input type="text" id="phone"></div>
+                        <div class="form-group full-width"><label>照片路徑</label><input type="text" id="photo"
+                                placeholder="C:/MovingSystem/uploads/..."></div>
+                        <div class="form-group"><label>緊急聯絡人</label><input type="text" id="contact"></div>
+                        <div class="form-group"><label>聯絡人電話</label><input type="text" id="c-phone"></div>
+                        <div class="form-group"><label>電子信箱</label><input type="email" id="email"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-add" onclick="saveNewEmployee()"
+                            style="background: #007bff; color: white;">儲存並返回</button>
+                        <button type="button" class="btn-add" onclick="location.href='employee.html'">取消退出</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script>
+        function saveNewEmployee() {
+            // 這裡之後可以傳送到後端
+                const newEmp = {
+                    id: document.getElementById('id').value,
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    status: '新進員工' // 預設狀態
+                };
+
+                // 1. 從倉庫拿出舊資料
+                let employees = JSON.parse(localStorage.getItem('myEmployees')) || [];
+
+                // 2. 加入新資料
+                employees.push(newEmp);
+
+                // 3. 存回倉庫
+                localStorage.setItem('myEmployees', JSON.stringify(employees));
+
+                alert('資料已儲存成功！');
+                window.location.href = 'employee.html';
+            }
+    </script>
+</body>
+
+</html>

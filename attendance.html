@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>員工出勤管理 - XXX搬家公司</title>
+    <link rel="stylesheet" href="employee.css">
+    <style>
+        /* 出勤美化 */
+        .attendance-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-bottom: 4px solid #0056b3;
+        }
+
+        .stat-card.alert {
+            border-bottom-color: #ff5252;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #c2185b;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .time-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .status-on {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        /* 正常 */
+        .status-late {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* 遲到 */
+    </style>
+</head>
+
+<body>
+    <header class="top-header">
+        <div class="company-name">XXX搬家公司</div>
+        <div class="user-info">
+            <span class="status-dot"></span>
+            <div class="greeting-box">早安，XXX</div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>人力管理模組</h3>
+            </div>
+            <nav class="sidebar-menu">
+                <ul>
+                    <li onclick="location.href='employee.html'"><i class="icon">👤</i> 員工資料管理</li>
+                    <li class="active"><i class="icon">📅</i> 員工出勤管理</li>
+                    <li><i class="icon">🏖️</i> 員工請假管理</li>
+                    <li onclick="location.href='disable_employee.html'"><i class="icon">📑</i> 人事異動管理</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content-area">
+            <h2 class="form-title">今日出勤概況 (2025-09-07)</h2>
+
+            <div class="attendance-stats">
+                <div class="stat-card">
+                    <span class="stat-value">42</span>
+                    <span class="stat-label">應到人數</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" style="color: #2e7d32;">38</span>
+                    <span class="stat-label">實到人數</span>
+                </div>
+                <div class="stat-card alert">
+                    <span class="stat-value">3</span>
+                    <span class="stat-label">遲到人數</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" style="color: #007bff;">1</span>
+                    <span class="stat-label">請假中</span>
+                </div>
+            </div>
+
+            <section class="data-table-container">
+                <div class="search-container" style="margin-bottom: 15px;">
+                    <input type="date" class="search-input" id="att-date">
+                    <button class="search-btn">切換日期</button>
+                </div>
+
+                <table class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>員工編號</th>
+                            <th>姓名</th>
+                            <th>上班打卡</th>
+                            <th>下班打卡</th>
+                            <th>目前狀態</th>
+                            <th>備註</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-id="EMP001">
+                            <td>EMP001</td>
+                            <td>王曉明</td>
+                            <td class="time-in">08:55:12</td>
+                            <td>18:05:44</td>
+                            <td class="status-cell"><span class="time-badge status-on">正常</span></td>
+                            <td>
+                                <button class="btn-edit" onclick="editAttendance('EMP001')">編輯</button>
+                            </td>
+                        </tr>
+                        <tr data-id="EMP002">
+                            <td>EMP002</td>
+                            <td>陳曉美</td>
+                            <td class="time-in">09:15:20</td>
+                            <td>--:--:--</td>
+                            <td class="status-cell"><span class="time-badge status-late">遲到</span></td>
+                            <td>
+                                <button class="btn-edit" onclick="editAttendance('EMP002')">編輯</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+<script>// 可以修改出勤狀態
+    function editAttendance(empId) {
+        const row = document.querySelector(`tr[data-id="${empId}"]`);
+        const timeCell = row.querySelector('.time-in');
+        const statusCell = row.querySelector('.status-cell');
+
+        // 1. 把文字變成輸入框
+        const currentTime = timeCell.innerText;
+        timeCell.innerHTML = `<input type="time" value="${currentTime}" id="edit-time-${empId}">`;
+
+        // 2. 把狀態變成下拉選單
+        statusCell.innerHTML = `
+        <select id="edit-status-${empId}">
+            <option value="正常">正常</option>
+            <option value="遲到">遲到</option>
+            <option value="請假">請假</option>
+        </select>
+    `;
+
+        // 3. 把按鈕變成「儲存」
+        const btn = row.querySelector('.btn-edit');
+        btn.innerText = '💾 儲存';
+        btn.onclick = () => saveAttendance(empId);
+    }
+
+    function saveAttendance(empId) {
+        const newTime = document.getElementById(`edit-time-${empId}`).value;
+        const newStatus = document.getElementById(`edit-status-${empId}`).value;
+
+        // 這裡可以寫入 LocalStorage 儲存！
+        alert(`${empId} 的紀錄已更新為 ${newTime} (${newStatus}) 囉！`);
+
+        // 重新渲染表格（恢復成文字狀態）
+        location.reload();
+    }</script>
+
+</html>

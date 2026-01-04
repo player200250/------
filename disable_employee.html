@@ -1,0 +1,181 @@
+<style>
+    /* 讓背景跟主頁面一樣乾淨 */
+    body {
+        background-color: #f4f7f6;
+        font-family: "Microsoft JhengHei", sans-serif;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* 裝飾那張填寫卡片 */
+    .form-card {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .form-title {
+        color: #c2185b; /* 桃紅色主題 */
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        font-size: 1.5rem;
+    }
+
+    /* 員工資訊摘要區 */
+    .employee-info-summary {
+        background: #fff5f8;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        border-left: 5px solid #c2185b;
+    }
+
+    .employee-info-summary p {
+        margin: 5px 0;
+        color: #555;
+    }
+
+    /* 表單元件美化 */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        box-sizing: border-box; /* 防止寬度溢出 */
+    }
+
+    /* 按鈕樣式：一個威嚴、一個溫柔 */
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-danger {
+        flex: 2;
+        padding: 12px;
+        background-color: #ff5252;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .btn-danger:hover {
+        background-color: #e53935;
+        box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+    }
+
+    .btn-secondary {
+        flex: 1;
+        padding: 12px;
+        background-color: #eee;
+        color: #666;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-secondary:hover {
+        background-color: #ddd;
+    }
+</style>
+<main class="content-area">
+    <div class="form-card">
+        <h2 class="form-title">｜員工停用/異動辦理</h2>
+        <div class="employee-info-summary">
+            <p><strong>目前員工：</strong> <span id="target-name">載入中...</span> (<span id="target-id">---</span>)</p>
+            <p><strong>目前狀態：</strong> <span id="current-status">---</span></p>
+        </div>
+        
+        <form id="disable-form">
+            <div class="form-group">
+                <label>異動類型</label>
+                <select id="change-type">
+                    <option value="離職">離職</option>
+                    <option value="留職停薪">留職停薪</option>
+                    <option value="停權">違反規定停權</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label>異動原因說明</label>
+                <textarea id="change-reason" rows="4" placeholder="請輸入詳細原因..."></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn-danger" onclick="confirmDisable()">執行停用</button>
+                <button type="button" class="btn-secondary" onclick="location.href='employee.html'">取消返回</button>
+            </div>
+        </form>
+    </div>
+
+    <script>document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const empId = urlParams.get('id');
+
+    if (!empId) {
+        alert("主人，網址裡沒有員工 ID，沒辦法辦理異動喔！");
+        window.location.href = 'employee.html';
+        return;
+    }
+
+    // 從倉庫拿出資料
+    let employees = JSON.parse(localStorage.getItem('myEmployees')) || [];
+    
+    // 如果倉庫找不到，可以加上這段去比對您的「初始範例資料」
+    const target = employees.find(e => e.id === empId);
+
+    if (target) {
+        document.getElementById('target-name').innerText = target.name;
+        document.getElementById('target-id').innerText = target.id;
+        document.getElementById('current-status').innerText = target.status;
+    } else {
+        document.getElementById('target-name').innerText = "找不到該員工";
+    }
+});
+
+function confirmDisable() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const empId = urlParams.get('id');
+    const newStatus = document.getElementById('change-type').value;
+    const reason = document.getElementById('change-reason').value; // 取得原因
+
+    let employees = JSON.parse(localStorage.getItem('myEmployees')) || [];
+    const index = employees.findIndex(e => e.id === empId);
+
+    if (index !== -1) {
+        // 更新狀態
+        employees[index].status = newStatus;
+        // 如果主人想紀錄原因，也可以存進去：employees[index].remark = reason;
+        
+        localStorage.setItem('myEmployees', JSON.stringify(employees));
+        
+        alert(`✨ 辦理完成！已將 ${employees[index].name} 變更為 ${newStatus}`);
+        window.location.href = 'employee.html';
+    } else {
+        alert("主人，倉庫裡找不到這位員工，可能是預設員工或是資料出錯了！");
+    }
+}</script>
+</main>
