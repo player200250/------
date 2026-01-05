@@ -65,7 +65,7 @@
                 <th>性別</th>
                 <th>身分證字號</th>
                 <th>員工個人電話</th>
-                <th>異動狀態狀態</th>
+                <th>異動狀態</th>
                 <th>電子信箱</th>
                 <th>操作</th>
               </tr>
@@ -125,5 +125,11 @@
     window.location.href = `edit_employee.html?id=${id}`;
 }
   </script>
+  <style>
+    #detail-modal .modal-content {
+        width: 600px; /* 加寬一點，才放得下左右兩欄 */
+        max-width: 90%;
+    }
+</style>
   
 </html>

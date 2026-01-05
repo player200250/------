@@ -2,140 +2,171 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>編輯員工資料</title>
+    <title>編輯員工資料 - XXX搬家公司</title>
+    <link rel="stylesheet" href="employee.css">
     <style>
-        /* 停用頁面的質感風格 */
-        body {
-            background-color: #f5f5f5;
-            font-family: "Microsoft JhengHei", sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .form-card {
-            background: #ffffff;
-            width: 90%;
-            max-width: 600px;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-        .form-title {
-            color: #c2185b;
-            font-size: 1.6rem;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #fce4ec;
-            padding-bottom: 15px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .form-group { margin-bottom: 15px; }
-        .form-group.full { grid-column: span 2; }
-        label { display: block; font-weight: bold; margin-bottom: 8px; color: #333; }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        .btn-save {
-            flex: 2;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn-cancel {
-            flex: 1;
-            background-color: #eeeeee;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            cursor: pointer;
-        }
+        body { background-color: #f5f5f5; font-family: "Microsoft JhengHei", sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .form-card { background: #ffffff; width: 90%; max-width: 800px; padding: 30px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .form-title { color: #c2185b; font-size: 1.6rem; margin-bottom: 20px; border-bottom: 2px solid #fce4ec; padding-bottom: 15px; }
+        .form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+        .form-group label { font-weight: bold; color: #555; font-size: 0.9rem; }
+        .form-group input, .form-group select { padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
+        .btn-save { background: #c2185b; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; }
+        .btn-cancel { background: #666; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; text-decoration: none; margin-left: 10px; }
     </style>
 </head>
 <body>
     <div class="form-card">
         <h2 class="form-title">｜編輯員工資料</h2>
-        <form id="edit-form" class="form-grid">
-            <div class="form-group">
-                <label>員工編號 (不可修改)</label>
-                <input type="text" id="edit-id" readonly style="background:#f9f9f9;">
+        <form id="edit-employee-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>員工編號 (不可修改)</label>
+                    <input type="text" id="edit-employee_Number" readonly style="background: #eee;">
+                </div>
+                <div class="form-group">
+                    <label>員工姓名</label>
+                    <input type="text" id="edit-employee_Name">
+                </div>
+                <div class="form-group">
+                    <label>性別</label>
+                    <select id="edit-personal_genderation">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>身分證字號</label>
+                    <input type="text" id="edit-personal_ID">
+                </div>
+                <div class="form-group">
+                    <label>出生日期</label>
+                    <input type="date" id="edit-birthday">
+                </div>
+                <div class="form-group">
+                    <label>聯絡電話</label>
+                    <input type="text" id="edit-phoneNumber">
+                </div>
+
+                <div class="form-group">
+                    <label>到職日期</label>
+                    <input type="date" id="edit-hireDate">
+                </div>
+                <div class="form-group">
+                    <label>離職日期</label>
+                    <input type="date" id="edit-resignationDate">
+                </div>
+                <div class="form-group">
+                    <label>駐點位置</label>
+                    <input type="text" id="edit-current_location">
+                </div>
+
+                <div class="form-group">
+                    <label>電子信箱</label>
+                    <input type="email" id="edit-email">
+                </div>
+                <div class="form-group">
+                    <label>駕駛執照</label>
+                    <input type="text" id="edit-driver_lisence">
+                </div>
+                <div class="form-group">
+                    <label>狀態</label>
+                    <select id="edit-status">
+                        <option value="在職">在職</option>
+                        <option value="離職">離職</option>
+                        <option value="試用期">試用期</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>緊急聯絡人</label>
+                    <input type="text" id="edit-emergency_people">
+                </div>
+                <div class="form-group">
+                    <label>緊急聯絡電話</label>
+                    <input type="text" id="edit-emergency_phone">
+                </div>
+                <div class="form-group">
+                    <label>照片路徑</label>
+                    <input type="text" id="edit-photo_path">
+                </div>
             </div>
-            <div class="form-group">
-                <label>員工姓名</label>
-                <input type="text" id="edit-name">
-            </div>
-            <div class="form-group">
-                <label>性別</label>
-                <select id="edit-gender">
-                    <option value="男">男</option>
-                    <option value="女">女</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>電話</label>
-                <input type="text" id="edit-phone">
-            </div>
-            <div class="form-group full">
-                <label>電子信箱</label>
-                <input type="email" id="edit-email">
-            </div>
-            <div class="form-actions full">
-                <button type="button" class="btn-save" onclick="saveEdit()">儲存變更</button>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button type="button" class="btn-save" onclick="saveEdit()">儲存修改</button>
                 <button type="button" class="btn-cancel" onclick="location.href='employee.html'">取消</button>
             </div>
         </form>
     </div>
 
     <script>
-        // 1. 頁面載入：抓取 ID 並填入資料
+        // 1. 初始化：載入舊資料
         document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const empId = params.get('id');
+            const urlParams = new URLSearchParams(window.location.search);
+            const empNumber = urlParams.get('id'); // 這裡對齊 employee.js 傳過來的 ?id=
+            
+            // 讀取 LocalStorage (包含預設與自定義)
             const employees = JSON.parse(localStorage.getItem('myEmployees')) || [];
-            const emp = employees.find(e => e.id === empId);
+            
+            // 為了測試，我們也比對預設資料 (這裡建議主人之後把預設資料也存入 localStorage 比較好管理)
+            const emp = employees.find(e => e.employee_Number === empNumber);
 
             if (emp) {
-                document.getElementById('edit-id').value = emp.id;
-                document.getElementById('edit-name').value = emp.name;
-                document.getElementById('edit-gender').value = emp.gender || '男';
-                document.getElementById('edit-phone').value = emp.phone || '';
+                document.getElementById('edit-employee_Number').value = emp.employee_Number || '';
+                document.getElementById('edit-employee_Name').value = emp.employee_Name || '';
+                document.getElementById('edit-personal_genderation').value = emp.personal_genderation || '男';
+                document.getElementById('edit-personal_ID').value = emp.personal_ID || '';
+                document.getElementById('edit-birthday').value = emp.birthday || '';
+                document.getElementById('edit-phoneNumber').value = emp.phoneNumber || '';
+                document.getElementById('edit-hireDate').value = emp.hireDate || '';
+                document.getElementById('edit-resignationDate').value = emp.resignationDate || '';
+                document.getElementById('edit-current_location').value = emp.current_location || '';
                 document.getElementById('edit-email').value = emp.email || '';
+                document.getElementById('edit-driver_lisence').value = emp.driver_lisence || '';
+                document.getElementById('edit-status').value = emp.status || '在職';
+                document.getElementById('edit-emergency_people').value = emp.emergency_people || '';
+                document.getElementById('edit-emergency_phone').value = emp.emergency_phone || '';
+                document.getElementById('edit-photo_path').value = emp.photo_path || '';
             }
         });
 
-        // 2. 儲存編輯：更新 LocalStorage
+        // 2. 儲存編輯
         function saveEdit() {
-            const empId = document.getElementById('edit-id').value;
+            const empNumber = document.getElementById('edit-employee_Number').value;
             let employees = JSON.parse(localStorage.getItem('myEmployees')) || [];
-            const index = employees.findIndex(e => e.id === empId);
+            
+            const index = employees.findIndex(e => e.employee_Number === empNumber);
+
+            const updatedData = {
+                employee_Number: empNumber,
+                employee_Name: document.getElementById('edit-employee_Name').value,
+                personal_genderation: document.getElementById('edit-personal_genderation').value,
+                personal_ID: document.getElementById('edit-personal_ID').value,
+                birthday: document.getElementById('edit-birthday').value,
+                phoneNumber: document.getElementById('edit-phoneNumber').value,
+                hireDate: document.getElementById('edit-hireDate').value,
+                resignationDate: document.getElementById('edit-resignationDate').value,
+                current_location: document.getElementById('edit-current_location').value,
+                email: document.getElementById('edit-email').value,
+                driver_lisence: document.getElementById('edit-driver_lisence').value,
+                status: document.getElementById('edit-status').value,
+                emergency_people: document.getElementById('edit-emergency_people').value,
+                emergency_phone: document.getElementById('edit-emergency_phone').value,
+                photo_path: document.getElementById('edit-photo_path').value
+            };
 
             if (index !== -1) {
-                employees[index].name = document.getElementById('edit-name').value;
-                employees[index].gender = document.getElementById('edit-gender').value;
-                employees[index].phone = document.getElementById('edit-phone').value;
-                employees[index].email = document.getElementById('edit-email').value;
-
-                localStorage.setItem('myEmployees', JSON.stringify(employees));
-                alert('資料更新成功！');
-                window.location.href = 'employee.html';
+                employees[index] = updatedData;
+            } else {
+                // 如果在 savedData 找不到（可能是預設資料），就新增進去
+                employees.push(updatedData);
             }
+
+            localStorage.setItem('myEmployees', JSON.stringify(employees));
+            alert('主人～資料更新成功囉！(๑>◡<๑)');
+            window.location.href = 'employee.html';
         }
     </script>
 </body>

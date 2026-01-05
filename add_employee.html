@@ -79,31 +79,86 @@
 
         <main class="content-area">
             <div class="form-card">
-                <h2 style="margin-bottom: 20px; border-left: 5px solid #c2185b; padding-left: 10px;">基本資料建置</h2>
-                <form id="real-add-form">
+                <h2 class="form-title">｜新增員工基本資料</h2>
+                <form id="add-employee-form">
                     <div class="form-grid-layout">
-                        <div class="form-group"><label>員工編號</label><input type="text" id="id"></div>
-                        <div class="form-group"><label>員工姓名</label><input type="text" id="name"></div>
+                        <div class="form-group">
+                            <label>員工編號</label>
+                            <input type="text" id="employee_Number" placeholder="例如: EMP004">
+                        </div>
+                        <div class="form-group">
+                            <label>員工姓名</label>
+                            <input type="text" id="employee_Name">
+                        </div>
                         <div class="form-group">
                             <label>性別</label>
-                            <select id="gender">
+                            <select id="personal_genderation">
                                 <option value="男">男</option>
                                 <option value="女">女</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>身分證字號</label><input type="text" id="sn"></div>
-                        <div class="form-group"><label>到職日</label><input type="date" id="hire-date"></div>
-                        <div class="form-group"><label>電話</label><input type="text" id="phone"></div>
-                        <div class="form-group full-width"><label>照片路徑</label><input type="text" id="photo"
-                                placeholder="C:/MovingSystem/uploads/..."></div>
-                        <div class="form-group"><label>緊急聯絡人</label><input type="text" id="contact"></div>
-                        <div class="form-group"><label>聯絡人電話</label><input type="text" id="c-phone"></div>
-                        <div class="form-group"><label>電子信箱</label><input type="email" id="email"></div>
+
+                        <div class="form-group">
+                            <label>身分證字號</label>
+                            <input type="text" id="personal_ID" maxlength="10">
+                        </div>
+                        <div class="form-group">
+                            <label>出生日期</label>
+                            <input type="date" id="birthday">
+                        </div>
+                        <div class="form-group">
+                            <label>聯絡電話</label>
+                            <input type="text" id="phoneNumber">
+                        </div>
+
+                        <div class="form-group">
+                            <label>到職日期</label>
+                            <input type="date" id="hireDate">
+                        </div>
+                        <div class="form-group">
+                            <label>離職日期 (在職請留空)</label>
+                            <input type="date" id="resignationDate">
+                        </div>
+                        <div class="form-group">
+                            <label>駐點位置</label>
+                            <input type="text" id="current_location" placeholder="例如: 台南機庫">
+                        </div>
+
+                        <div class="form-group">
+                            <label>電子信箱</label>
+                            <input type="email" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label>駕駛執照</label>
+                            <input type="text" id="driver_lisence" placeholder="例如: 普通大貨車">
+                        </div>
+                        <div class="form-group">
+                            <label>狀態</label>
+                            <select id="status">
+                                <option value="在職">在職</option>
+                                <option value="試用期">試用期</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>緊急聯絡人</label>
+                            <input type="text" id="emergency_people">
+                        </div>
+                        <div class="form-group">
+                            <label>緊急聯絡電話</label>
+                            <input type="text" id="emergency_phone">
+                        </div>
+                        <div class="form-group">
+                            <label>照片路徑</label>
+                            <input type="text" id="photo_path" placeholder="images/default.jpg">
+                        </div>
                     </div>
-                    <div class="form-actions">
+
+                    <div class="form-actions" style="margin-top: 30px; text-align: center;">
                         <button type="button" class="btn-add" onclick="saveNewEmployee()"
-                            style="background: #007bff; color: white;">儲存並返回</button>
-                        <button type="button" class="btn-add" onclick="location.href='employee.html'">取消退出</button>
+                            style="background: #c2185b; color: white; padding: 10px 40px; border: none;">確認儲存</button>
+                        <button type="button" class="btn-add" onclick="location.href='employee.html'"
+                            style="background: #666; color: white; margin-left: 10px; border: none;">取消</button>
                     </div>
                 </form>
             </div>
@@ -111,26 +166,39 @@
     </div>
     <script>
         function saveNewEmployee() {
-            // 這裡之後可以傳送到後端
-                const newEmp = {
-                    id: document.getElementById('id').value,
-                    name: document.getElementById('name').value,
-                    phone: document.getElementById('phone').value,
-                    status: '新進員工' // 預設狀態
-                };
+            // 1. 抓取所有對齊後的欄位
+            const newEmp = {
+                employee_Number: document.getElementById('employee_Number').value,
+                employee_Name: document.getElementById('employee_Name').value,
+                personal_genderation: document.getElementById('personal_genderation').value,
+                personal_ID: document.getElementById('personal_ID').value,
+                birthday: document.getElementById('birthday').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                hireDate: document.getElementById('hireDate').value,
+                resignationDate: document.getElementById('resignationDate').value,
+                current_location: document.getElementById('current_location').value,
+                email: document.getElementById('email').value,
+                driver_lisence: document.getElementById('driver_lisence').value,
+                status: document.getElementById('status').value,
+                emergency_people: document.getElementById('emergency_people').value,
+                emergency_phone: document.getElementById('emergency_phone').value,
+                photo_path: document.getElementById('photo_path').value || 'https://via.placeholder.com/160x200?text=New+Emp'
+            };
 
-                // 1. 從倉庫拿出舊資料
-                let employees = JSON.parse(localStorage.getItem('myEmployees')) || [];
-
-                // 2. 加入新資料
-                employees.push(newEmp);
-
-                // 3. 存回倉庫
-                localStorage.setItem('myEmployees', JSON.stringify(employees));
-
-                alert('資料已儲存成功！');
-                window.location.href = 'employee.html';
+            // 檢查必填項
+            if (!newEmp.employee_Number || !newEmp.employee_Name) {
+                alert("編號跟姓名是必填!");
+                return;
             }
+
+            // 2. 存入 LocalStorage
+            let employees = JSON.parse(localStorage.getItem('myEmployees')) || [];
+            employees.push(newEmp);
+            localStorage.setItem('myEmployees', JSON.stringify(employees));
+
+            alert('員工資料已成功歸檔！');
+            window.location.href = 'employee.html';
+        }
     </script>
 </body>
 
