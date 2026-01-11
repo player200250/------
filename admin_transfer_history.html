@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>異動紀錄管理 - XXX搬家公司</title>
+    <link rel="stylesheet" href="employee.css">
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="company-name">人事系統 - 異動審核模組</div>
+        <div class="greeting-box">管理員，早安</div>
+    </header>
+
+    <div class="main-layout" style="display: flex; min-height: calc(100vh - 60px);">
+
+        <aside class="sidebar" style="width: 250px; flex-shrink: 0;">
+            <div class="sidebar-header">
+                <h3>人力管理模組</h3>
+            </div>
+            <nav class="sidebar-menu">
+                <ul>
+                    <li onclick="location.href='employee.html'"><i class="icon">👤</i> 員工資料管理</li>
+                    <li onclick="location.href='attendance.html'"><i class="icon">📅</i> 員工出勤管理</li>
+                    <li onclick="location.href='admin_leave_approval.html'"><i class="icon">🏖️</i> 員工請假管理</li>
+                    <li onclick="location.href='admin_transfer_request.html'"><i class="icon">➕</i> 發起異動申請</li>
+                    <li class="active" onclick="location.href='admin_transfer_history.html'"><i class="icon">📑</i> 人事異動紀錄</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content-area" style="flex-grow: 1; padding: 25px;">
+            <section class="employee-table1" style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <div class="form-title" style="margin-bottom: 20px; color: #c2185b; font-weight: bold; font-size: 1.2rem;">
+                    ｜人事異動紀錄管理 <span style="font-size: 0.8rem; color: #888;">(對應模組四：異動結果表)</span>
+                </div>
+                
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: #fce4ec; color: #c2185b;">
+                            <th style="padding: 12px;">異動日期</th>
+                            <th>員工姓名</th>
+                            <th>異動類型</th>
+                            <th>職位/部門變動 (原 ➔ 新)</th>
+                            <th>狀態</th>
+                            <th>詳細</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transfer-history-list" style="text-align: center;">
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 15px;">2025-10-01</td>
+                            <td style="font-weight: bold;">王小明</td>
+                            <td><span class="time-badge status-leave" style="background: #e1f5fe; color: #01579b;">升職</span></td>
+                            <td>運輸部 ➔ 營運部</td>
+                            <td><span class="status-approve" style="color: #28a745;">● 已生效</span></td>
+                            <td>
+                                <button class="btn-edit" style="background: #6c757d; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer;">查看原因</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>請假申請 - XXX搬家公司</title>
+    <link rel="stylesheet" href="employee.css">
+    <style>
+        /* 專門為員工申請表單優化的樣式 */
+        .form-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .leave-card {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .btn-submit {
+            background: #c2185b;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-submit:hover { background: #ad1457; transform: translateY(-2px); }
+    </style>
+</head>
+<body style="background-color: #fce4ec;">
+
+    <header class="top-header">
+        <div class="company-name">XXX搬家公司 - 員工申請</div>
+        <div class="greeting-box" onclick="location.href='user_portal.html'" style="cursor:pointer;">
+            ⬅ 返回個人中心
+        </div>
+    </header>
+
+    <div class="form-container">
+        <div class="leave-card">
+            <h2 class="form-title" style="color: #c2185b; text-align: center; margin-bottom: 30px;">
+                🏖️ 填寫請假申請單
+            </h2>
+
+            <form id="leave-form">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>員工姓名</label>
+                        <input type="text" value="爵瑀" readonly style="background: #f9f9f9; color: #888;">
+                    </div>
+                    <div class="form-group">
+                        <label>員工編號</label>
+                        <input type="text" value="EMP888" readonly style="background: #f9f9f9; color: #888;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>請假類型 (LeaveType)</label>
+                    <select id="leave-type" required>
+                        <option value="事假">事假</option>
+                        <option value="病假">病假</option>
+                        <option value="特休">特休</option>
+                        <option value="婚假">婚假</option>
+                        <option value="喪假">喪假</option>
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>開始日期</label>
+                        <input type="date" id="start-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>請假天數</label>
+                        <input type="number" id="days" min="0.5" step="0.5" placeholder="例如: 1.5" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>請假原因說明 (Remark)</label>
+                    <textarea id="remark" rows="4" placeholder="請詳細敘述您的原因..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">送出申請並等待審核</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('leave-form').onsubmit = function(e) {
+            e.preventDefault();
+            
+            // 抓取表單資料
+            const leaveData = {
+                id: Date.now(), // 簡單生成一個 ID
+                empId: 'EMP888',
+                name: '爵瑀',
+                type: document.getElementById('leave-type').value,
+                startDate: document.getElementById('start-date').value,
+                days: document.getElementById('days').value,
+                remark: document.getElementById('remark').value,
+                status: '待審核' // 預設狀態
+            };
+
+            // 1. 存入 LocalStorage (模擬寫入資料庫)
+            let pendingLeaves = JSON.parse(localStorage.getItem('pendingLeaves')) || [];
+            pendingLeaves.push(leaveData);
+            localStorage.setItem('pendingLeaves', JSON.stringify(pendingLeaves));
+
+            alert('主人～您的請假申請已經送出囉！快去找管理員審核吧 (๑>◡<๑)');
+            location.href = 'user_portal.html';
+        };
+    </script>
+</body>
+</html>

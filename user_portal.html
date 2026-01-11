@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>員工個人中心 - XXX搬家公司</title>
+    <link rel="stylesheet" href="employee.css">
+    <style>
+        .user-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 25px; text-align: center; }
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .punch-btn { background: #007bff; color: white; border: none; padding: 20px; border-radius: 10px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
+        .punch-btn:hover { background: #0056b3; transform: scale(1.02); }
+        .leave-btn { background: #c2185b; color: white; border: none; padding: 20px; border-radius: 10px; font-size: 1.2rem; cursor: pointer; }
+        .status-box { background: #fff3e0; padding: 15px; border-radius: 8px; border-left: 5px solid #ff9800; text-align: left; margin-top: 15px; }
+    </style>
+</head>
+<body style="background-color: #f4f7f6;">
+
+    <header class="top-header">
+        <div class="company-name">XXX搬家公司 - 員工專區</div>
+        <div class="greeting-box">早安，爵瑀</div>
+    </header>
+
+    <main class="content-area" style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+        
+        <div class="user-card">
+            <img src="https://via.placeholder.com/100" style="border-radius: 50%; border: 3px solid #c2185b;">
+            <h2 style="margin: 10px 0;">爵瑀 (EMP888)</h2>
+            <p style="color: #666;">目前部門：行政部 | 職位：工程師</p>
+            
+            <div class="status-box">
+                <strong>🔔 最新通知：</strong>
+                您的 2025-10-01 升職申請已核准，請至歷史紀錄查看。
+            </div>
+        </div>
+
+        <div class="action-grid">
+            <button class="punch-btn" onclick="alert('打卡成功！時間：' + new Date().toLocaleTimeString())">
+                📍 上班打卡
+            </button>
+            <button class="leave-btn" onclick="location.href='user_leave_apply.html'">
+                🏖️ 填寫請假單
+            </button>
+        </div>
+
+        <section class="employee-table1" style="margin-top: 30px; padding: 15px;">
+            <div class="form-title">｜我的最近請假紀錄</div>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <thead>
+                    <tr style="background: #fce4ec;">
+                        <th>日期</th>
+                        <th>類別</th>
+                        <th>狀態</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align: center;">
+                    <tr>
+                        <td>2025-09-20</td>
+                        <td>事假</td>
+                        <td><span style="color: #28a745;">核准</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+</body>
+</html>
