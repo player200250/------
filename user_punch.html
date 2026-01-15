@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>員工打卡系統 - 蘊月搬家公司</title>
+    <link rel="stylesheet" href="employee.css">
+    <style>
+        .punch-box {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .time-display {
+            font-size: 3rem;
+            color: #c2185b;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .data-preview {
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .btn-punch-main {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 60px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .btn-punch-main:disabled { background: #ccc; cursor: not-allowed; }
+        .field-label { color: #888; font-weight: bold; }
+    </style>
+</head>
+<body style="background-color: #fce4ec;">
+
+    <div class="punch-box">
+        <h2 style="color: #c2185b;">📍 每日出勤打卡</h2>
+
+        <div id="date-now" style="color: #666;">2026-01-12</div>
+        <div class="time-display" id="time-now">00:00:00</div>
+
+        <div class="data-preview">
+            <p><span class="field-label">員工編號：</span> <span id="field-emp-id">EMP888</span></p>
+            <p><span class="field-label">本日班別：</span> <span id="field-shift-type">固定班 (08:00-17:00)</span></p>
+
+            <p><span class="field-label">打卡類型：</span>
+                <select id="field-punch-type" style="padding: 5px; border-radius: 5px;">
+                    <option value="上班">🌅 上班打卡</option>
+                    <option value="下班">🌙 下班打卡</option>
+                    <option value="暫離">☕ 暫時離開</option>
+                    <option value="回崗">🔙 返回崗位</option>
+                </select>
+            </p>
+
+            <p><span class="field-label">打卡地點：</span> <span id="field-location">取得中...</span></p>
+
+            <input type="hidden" id="field-lng">
+            <input type="hidden" id="field-lat">
+            <input type="hidden" id="hidden-distance">
+
+            <p><span class="field-label">備註事項：</span><br>
+                <input type="text" id="field-remark" placeholder="如有特殊狀況請註明"
+                    style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 5px;">
+            </p>
+        </div>
+
+        <button class="btn-punch-main" id="btn-submit" onclick="handlePunchSubmit()">確認打卡</button>
+    </div>
+
+    <script>
+        // 1. 即時時鐘
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('time-now').innerText = now.toTimeString().split(' ')[0];
+            document.getElementById('date-now').innerText = now.toLocaleDateString();
+        }
+        setInterval(updateClock, 1000);
+
+        // 2. 模擬定位 (未來可接真正的 navigator.geolocation)
+        setTimeout(() => {
+            document.getElementById('field-location').innerText = "台中市南屯區五權西路二段";
+            document.getElementById('field-lat').value = 24.143;
+            document.getElementById('field-lng').value = 120.640;
+            document.getElementById('hidden-distance').value = 0.12; 
+        }, 1000);
+
+        // 3. 打卡提交邏輯
+        function handlePunchSubmit() {
+            const now = new Date();
+            const hour = now.getHours();
+            const dist = parseFloat(document.getElementById('hidden-distance').value) || 0;
+            const btn = document.getElementById('btn-submit');
+
+            // --- 進階邏輯：根據班別時段判定狀態 ---
+            let status = "正常"; 
+            // 假設是固定班 08:00 上班，超過 8 點且是「上班」類型則需審核
+            if (document.getElementById('field-punch-type').value === "上班" && hour >= 8) {
+                status = "待審核";
+            }
+            // 地點太遠也強制待審核
+            if (dist >= 0.5) status = "待審核";
+
+            // --- 依照 ER 圖完整打包 ---
+            const punchRecord = {
+                attendanceId: 1, // 關聯出勤總表
+                punchTime: now.toISOString(),
+                punchType: document.getElementById('field-punch-type').value, // '上班','下班','暫離','回崗'
+                sourceType: "網站", // 符合 CHECK 約束
+                punchLocation: document.getElementById('field-location').innerText,
+                punchLat: parseFloat(document.getElementById('field-lat').value),
+                punchLng: parseFloat(document.getElementById('field-lng').value),
+                distanceFromSite: dist,
+                isValidLocation: dist < 0.5 ? 1 : 0, // BIT 類型
+                punchStatus: status, // '正常','待審核' 等
+                attendanceNote: document.getElementById('field-remark').value
+            };
+
+            btn.disabled = true;
+            btn.innerText = "資料送出中...";
+
+            console.log("主人！已成功打包對齊 ER 圖的資料：", punchRecord);
+            alert(`打卡成功！目前狀態：${status} (๑>◡<๑)`);
+            window.location.href = 'user_portal.html';
+        }
+    </script>
+</body>
+</html>
