@@ -130,6 +130,11 @@
             btn.disabled = true;
             btn.innerText = "資料送出中...";
 
+            //儲存置本地端模擬後端
+            let list = JSON.parse(localStorage.getItem('punchRecords') || '[]');
+            list.push(punchRecord);
+            localStorage.setItem('punchRecords', JSON.stringify(list));
+
             console.log("主人！已成功打包對齊 ER 圖的資料：", punchRecord);
             alert(`打卡成功！目前狀態：${status} (๑>◡<๑)`);
             window.location.href = 'user_portal.html';
